@@ -6,7 +6,6 @@
 
 body {
     font-family: 'Arial', sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: #776e65;
     min-height: 100vh;
     display: flex;
@@ -79,7 +78,6 @@ h1 {
 
 .game-container {
     position: relative;
-    background: #bbada0;
     border-radius: 10px;
     padding: 10px;
     margin-bottom: 20px;
@@ -100,7 +98,6 @@ h1 {
 .grid-cell {
     width: 100px;
     height: 100px;
-    background: rgba(238, 228, 218, 0.35);
     border-radius: 6px;
 }
 

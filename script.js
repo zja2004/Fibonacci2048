@@ -306,51 +306,197 @@ class FibonacciGame {
         
         if (emptyCells.length > 0) {
             let randomCell = emptyCells[Math.floor(Math.random() * emptyCells.length)];
-            // 90% 概率生成1，10% 概率生成2
-            this.grid[randomCell.x][randomCell.y] = Math.random() < 0.9 ? 1 : 2;
+            
+            // 获取当前网格中的最大数字
+            let maxValue = 0;
+            for (let i = 0; i < 4; i++) {
+                for (let j = 0; j < 4; j++) {
+                    if (this.grid[i][j] > maxValue) {
+                        maxValue = this.grid[i][j];
+                    }
+                }
+            }
+            
+            // 根据最大数字动态调整生成数字的概率分布
+            let probabilities = [];
+            
+            if (maxValue < 55) {
+                // 最大值小于55：只生成1
+                probabilities = [{value: 1, prob: 1.0}];
+            } else if (maxValue >= 55 && maxValue < 89) {
+                // 最大值为55：80%生成1，20%生成2
+                probabilities = [
+                    {value: 1, prob: 0.8},
+                    {value: 2, prob: 0.2}
+                ];
+            } else if (maxValue >= 89 && maxValue < 144) {
+                // 最大值为89：40%生成1，40%生成2，20%生成3
+                probabilities = [
+                    {value: 1, prob: 0.4},
+                    {value: 2, prob: 0.4},
+                    {value: 3, prob: 0.2}
+                ];
+            } else if (maxValue >= 144 && maxValue < 233) {
+                // 最大值为144：1、2、3、5各25%
+                probabilities = [
+                    {value: 1, prob: 0.25},
+                    {value: 2, prob: 0.25},
+                    {value: 3, prob: 0.25},
+                    {value: 5, prob: 0.25}
+                ];
+            } else if (maxValue >= 233 && maxValue < 377) {
+                // 最大值为233：1的概率40%，2、3、5、8各15%
+                probabilities = [
+                    {value: 1, prob: 0.4},
+                    {value: 2, prob: 0.15},
+                    {value: 3, prob: 0.15},
+                    {value: 5, prob: 0.15},
+                    {value: 8, prob: 0.15}
+                ];
+            } else if (maxValue >= 377 && maxValue < 610) {
+                // 最大值为377：1的概率40%，2、3、5、8、13、21各10%
+                probabilities = [
+                    {value: 1, prob: 0.4},
+                    {value: 2, prob: 0.1},
+                    {value: 3, prob: 0.1},
+                    {value: 5, prob: 0.1},
+                    {value: 8, prob: 0.1},
+                    {value: 13, prob: 0.1},
+                    {value: 21, prob: 0.1}
+                ];
+            } else {
+                // 最大值为610或更大：1的概率30%，2、3、5、8、13、21、34各10%
+                probabilities = [
+                    {value: 1, prob: 0.3},
+                    {value: 2, prob: 0.1},
+                    {value: 3, prob: 0.1},
+                    {value: 5, prob: 0.1},
+                    {value: 8, prob: 0.1},
+                    {value: 13, prob: 0.1},
+                    {value: 21, prob: 0.1},
+                    {value: 34, prob: 0.1}
+                ];
+            }
+            
+            // 根据概率分布选择数字
+            let random = Math.random();
+            let cumulative = 0;
+            let value = 1;
+            
+            for (let i = 0; i < probabilities.length; i++) {
+                cumulative += probabilities[i].prob;
+                if (random <= cumulative) {
+                    value = probabilities[i].value;
+                    break;
+                }
+            }
+            this.grid[randomCell.x][randomCell.y] = value;
         }
     }
     
     updateTiles() {
+        // 获取方块容器并清空所有现有方块
         const container = document.getElementById('tile-container');
         container.innerHTML = '';
         
-        // 根据屏幕尺寸、方向和缩放比例动态计算方块尺寸和间距
+        /**
+         * 动态计算方块尺寸和间距的核心函数
+         * 这个函数解决了以下问题：
+         * 1. 不同屏幕尺寸需要不同的方块大小
+         * 2. 横屏和竖屏需要不同的处理策略
+         * 3. 浏览器缩放会影响JavaScript获取的屏幕尺寸
+         */
         const getTileConfig = () => {
-            // 获取设备像素比和缩放因子
+            // === 缩放检测部分 ===
+            // devicePixelRatio: 设备像素比，用于高分辨率屏幕
             const devicePixelRatio = window.devicePixelRatio || 1;
+            
+            // zoomLevel: 浏览器缩放比例
+            // 原理：outerWidth是浏览器窗口的实际宽度，innerWidth是视口宽度
+            // 当用户缩放时，innerWidth会变化，但outerWidth相对稳定
+            // 比如：100%缩放时 outerWidth/innerWidth ≈ 1
+            //      150%缩放时 outerWidth/innerWidth ≈ 1.5
             const zoomLevel = Math.round((window.outerWidth / window.innerWidth) * 100) / 100;
             
-            // 使用实际的物理屏幕宽度（考虑缩放）
+            // === 实际屏幕尺寸计算 ===
+            // actualScreenWidth: 考虑缩放后的真实屏幕宽度
+            // 这样可以确保无论用户如何缩放，都能正确判断屏幕尺寸类型
             const actualScreenWidth = window.innerWidth * zoomLevel;
             const screenHeight = window.innerHeight;
+            
+            // === 屏幕方向检测 ===
+            // isPortrait: 判断是否为竖屏模式
+            // 竖屏时可用水平空间更少，需要使用更小的方块
             const isPortrait = screenHeight > window.innerWidth;
             
-            // 在竖屏模式下，使用更小的尺寸
+            // === 尺寸选择逻辑 ===
+            // 这里的断点值需要与CSS媒体查询保持一致
+            // CSS中设置了对应的gap值：
+            // - 400px以下或竖屏500px以下：gap: 6px
+            // - 600px以下或竖屏700px以下：gap: 8px  
+            // - 其他情况：gap: 10px
+            
             if (actualScreenWidth <= 400 || (isPortrait && actualScreenWidth <= 500)) {
-                return { size: 60, gap: 6 }; // 小屏幕或竖屏
+                // 小屏幕：60px方块 + 6px间距
+                // 适用于小手机或竖屏模式
+                return { size: 60, gap: 6 };
             } else if (actualScreenWidth <= 600 || (isPortrait && actualScreenWidth <= 700)) {
-                return { size: 70, gap: 8 }; // 中等屏幕
+                // 中等屏幕：70px方块 + 8px间距
+                // 适用于大手机或小平板
+                return { size: 70, gap: 8 };
             } else {
-                return { size: 100, gap: 10 }; // 大屏幕
+                // 大屏幕：100px方块 + 10px间距
+                // 适用于桌面或大平板
+                return { size: 100, gap: 10 };
             }
         };
         
+        // 获取当前应该使用的方块尺寸和间距
         const { size, gap } = getTileConfig();
         
-        for (let i = 0; i < 4; i++) {
-            for (let j = 0; j < 4; j++) {
+        // === 方块渲染循环 ===
+        // 遍历4x4网格，为每个非零位置创建方块
+        for (let i = 0; i < 4; i++) {        // i: 行索引 (0-3)
+            for (let j = 0; j < 4; j++) {    // j: 列索引 (0-3)
                 if (this.grid[i][j] !== 0) {
+                    // 创建方块DOM元素
                     const tile = document.createElement('div');
                     tile.className = `tile tile-${this.grid[i][j]} tile-new`;
                     tile.textContent = this.grid[i][j];
-                    // 精确计算位置：每个位置 = 索引 * (方块尺寸 + 间距)
-                    tile.style.left = `${j * (size + gap)}px`;
-                    tile.style.top = `${i * (size + gap)}px`;
+                    
+                    // === 位置计算公式 ===
+                    // 这是整个对齐逻辑的核心！
+                    // 
+                    // 水平位置 = 列索引 × (方块尺寸 + 间距)
+                    // 垂直位置 = 行索引 × (方块尺寸 + 间距)
+                    // 
+                    // 例如：第2行第3列的方块 (i=1, j=2)
+                    // 如果size=70, gap=8，则：
+                    // left = 2 × (70 + 8) = 156px
+                    // top = 1 × (70 + 8) = 78px
+                    // 
+                    // 这个公式必须与CSS网格的渲染逻辑完全一致！
+                    // CSS使用grid-gap来控制间距，我们的计算必须匹配
+                    
+                    tile.style.left = `${j * (size + gap)}px`;   // 水平位置
+                    tile.style.top = `${i * (size + gap)}px`;    // 垂直位置
+                    
+                    // 将方块添加到容器中
                     container.appendChild(tile);
                 }
             }
         }
+        
+        // === 调试信息 ===
+        // 如果对齐仍有问题，可以取消注释下面的代码来调试
+         console.log('Screen info:', {
+             innerWidth: window.innerWidth,
+             outerWidth: window.outerWidth,
+             zoomLevel: (window.outerWidth / window.innerWidth),
+             actualWidth: window.innerWidth * (window.outerWidth / window.innerWidth),
+             selectedSize: size,
+             selectedGap: gap
+         });
     }
     
     updateDisplay() {
