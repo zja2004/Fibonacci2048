@@ -28,9 +28,92 @@ class FibonacciGame {
     }
     
     bindEvents() {
+        // 键盘事件
         document.addEventListener('keydown', (e) => this.handleKeyPress(e));
+        
+        // 触摸事件
+        this.setupTouchEvents();
+        
+        // 按钮事件
         document.getElementById('restart-btn').addEventListener('click', () => this.restart());
         document.getElementById('try-again-btn').addEventListener('click', () => this.restart());
+    }
+    
+    setupTouchEvents() {
+        const gameContainer = document.querySelector('.game-container');
+        let startX = 0;
+        let startY = 0;
+        let endX = 0;
+        let endY = 0;
+        
+        gameContainer.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            const touch = e.touches[0];
+            startX = touch.clientX;
+            startY = touch.clientY;
+        }, { passive: false });
+        
+        gameContainer.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+        }, { passive: false });
+        
+        gameContainer.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            if (e.changedTouches.length === 0) return;
+            
+            const touch = e.changedTouches[0];
+            endX = touch.clientX;
+            endY = touch.clientY;
+            
+            this.handleSwipe(startX, startY, endX, endY);
+        }, { passive: false });
+    }
+    
+    handleSwipe(startX, startY, endX, endY) {
+        if (this.gameOver) return;
+        
+        const deltaX = endX - startX;
+        const deltaY = endY - startY;
+        const minSwipeDistance = 30; // 最小滑动距离
+        
+        // 判断是否为有效滑动
+        if (Math.abs(deltaX) < minSwipeDistance && Math.abs(deltaY) < minSwipeDistance) {
+            return;
+        }
+        
+        let moved = false;
+        
+        // 判断滑动方向
+        if (Math.abs(deltaX) > Math.abs(deltaY)) {
+            // 水平滑动
+            if (deltaX > 0) {
+                // 向右滑动
+                moved = this.moveRight();
+            } else {
+                // 向左滑动
+                moved = this.moveLeft();
+            }
+        } else {
+            // 垂直滑动
+            if (deltaY > 0) {
+                // 向下滑动
+                moved = this.moveDown();
+            } else {
+                // 向上滑动
+                moved = this.moveUp();
+            }
+        }
+        
+        if (moved) {
+            this.addRandomTile();
+            this.updateTiles();
+            this.updateDisplay();
+            
+            if (this.isGameOver()) {
+                this.gameOver = true;
+                this.showGameOverMessage();
+            }
+        }
     }
     
     handleKeyPress(e) {

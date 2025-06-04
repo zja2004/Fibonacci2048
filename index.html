@@ -2,7 +2,9 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>斐波那契2048</title>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -23,7 +25,7 @@
         </header>
         
         <div class="game-intro">
-            <p>使用方向键移动方块。相邻的斐波那契数字会合并成下一个数字！</p>
+            <p>使用方向键或滑动手势移动方块。相邻的斐波那契数字会合并成下一个数字！</p>
             <p>1 + 1 = 2, 1 + 2 = 3, 2 + 3 = 5, 3 + 5 = 8...</p>
         </div>
         
@@ -67,7 +69,7 @@
         <div class="game-explanation">
             <h3>游戏规则：</h3>
             <ul>
-                <li>使用方向键（↑↓←→）移动方块</li>
+                <li>使用方向键（↑↓←→）或滑动手势移动方块</li>
                 <li>相邻的斐波那契数字可以合并</li>
                 <li>合并规则：1+1=2, 1+2=3, 2+3=5, 3+5=8, 5+8=13...</li>
                 <li>目标是创造出更大的斐波那契数字</li>

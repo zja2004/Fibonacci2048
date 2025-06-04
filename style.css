@@ -13,6 +13,11 @@ body {
     justify-content: center;
     align-items: center;
     padding: 20px;
+    /* 防止移动端缩放和滚动 */
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
 }
 
 .container {
@@ -269,39 +274,127 @@ h1 {
     background: #9f8a76;
 }
 
+/* 游戏容器触摸优化 */
+.game-container {
+    /* 确保触摸事件正常工作 */
+    touch-action: none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
 /* 响应式设计 */
 @media (max-width: 600px) {
+    body {
+        padding: 10px;
+    }
+    
     .container {
-        padding: 20px;
+        padding: 15px;
+        max-width: 100%;
+    }
+    
+    header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
     }
     
     h1 {
         font-size: 2em;
     }
     
+    .score-container {
+        justify-content: center;
+    }
+    
     .grid-cell, .tile {
-        width: 80px;
-        height: 80px;
+        width: 70px;
+        height: 70px;
     }
     
     .tile {
-        font-size: 1.6em;
+        font-size: 1.4em;
+        line-height: 70px;
     }
     
     .tile-13, .tile-21, .tile-34, .tile-55, .tile-89 {
-        font-size: 1.4em;
-    }
-    
-    .tile-144, .tile-233, .tile-377 {
         font-size: 1.2em;
     }
     
-    .tile-610, .tile-987 {
+    .tile-144, .tile-233, .tile-377 {
         font-size: 1em;
     }
     
-    .tile-1597, .tile-2584 {
+    .tile-610, .tile-987 {
         font-size: 0.9em;
+    }
+    
+    .tile-1597, .tile-2584 {
+        font-size: 0.8em;
+    }
+    
+    .game-intro {
+        font-size: 0.9em;
+    }
+    
+    .game-explanation {
+        font-size: 0.9em;
+    }
+}
+
+@media (max-width: 400px) {
+    .container {
+        padding: 10px;
+    }
+    
+    h1 {
+        font-size: 1.8em;
+    }
+    
+    .grid-cell, .tile {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .tile {
+        font-size: 1.2em;
+        line-height: 60px;
+    }
+    
+    .tile-13, .tile-21, .tile-34, .tile-55, .tile-89 {
+        font-size: 1em;
+    }
+    
+    .tile-144, .tile-233, .tile-377 {
+        font-size: 0.9em;
+    }
+    
+    .tile-610, .tile-987 {
+        font-size: 0.8em;
+    }
+    
+    .tile-1597, .tile-2584 {
+        font-size: 0.7em;
+    }
+    
+    .score-box {
+        min-width: 70px;
+        padding: 8px 12px;
+    }
+    
+    .game-intro {
+        font-size: 0.85em;
+        margin-bottom: 15px;
+    }
+    
+    .game-explanation {
+        font-size: 0.85em;
+    }
+    
+    .restart-button {
+        padding: 10px 20px;
+        font-size: 1em;
     }
     
     .tile-4181 {
