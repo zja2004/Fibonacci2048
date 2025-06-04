@@ -315,13 +315,13 @@ class FibonacciGame {
         const container = document.getElementById('tile-container');
         container.innerHTML = '';
         
-        // 根据屏幕宽度动态计算方块尺寸
+        // 根据屏幕宽度动态计算方块尺寸和间距
         const getTileSize = () => {
             const screenWidth = window.innerWidth;
             if (screenWidth <= 400) {
-                return { size: 60, gap: 10 }; // 小屏幕
+                return { size: 60, gap: 8 }; // 小屏幕，减少间距
             } else if (screenWidth <= 600) {
-                return { size: 70, gap: 10 }; // 中等屏幕
+                return { size: 70, gap: 9 }; // 中等屏幕，稍微减少间距
             } else {
                 return { size: 100, gap: 10 }; // 大屏幕
             }
