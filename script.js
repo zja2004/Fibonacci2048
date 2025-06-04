@@ -328,6 +328,7 @@ class FibonacciGame {
         };
         
         const { size, gap } = getTileSize();
+        // 间距应该等于方块尺寸加上间隙，与CSS网格保持一致
         const spacing = size + gap;
         
         for (let i = 0; i < 4; i++) {
@@ -336,8 +337,9 @@ class FibonacciGame {
                     const tile = document.createElement('div');
                     tile.className = `tile tile-${this.grid[i][j]} tile-new`;
                     tile.textContent = this.grid[i][j];
-                    tile.style.left = `${j * spacing}px`;
-                    tile.style.top = `${i * spacing}px`;
+                    // 计算位置时需要考虑网格间距
+                    tile.style.left = `${j * (size + gap)}px`;
+                    tile.style.top = `${i * (size + gap)}px`;
                     container.appendChild(tile);
                 }
             }
