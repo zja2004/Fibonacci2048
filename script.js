@@ -315,20 +315,19 @@ class FibonacciGame {
         const container = document.getElementById('tile-container');
         container.innerHTML = '';
         
-        // 根据屏幕宽度动态计算方块尺寸
-        const getTileSize = () => {
+        // 根据屏幕宽度动态计算方块尺寸和间距
+        const getTileConfig = () => {
             const screenWidth = window.innerWidth;
             if (screenWidth <= 400) {
-                return { size: 60 }; // 小屏幕
+                return { size: 60, gap: 6 }; // 小屏幕
             } else if (screenWidth <= 600) {
-                return { size: 70 }; // 中等屏幕
+                return { size: 70, gap: 8 }; // 中等屏幕
             } else {
-                return { size: 100 }; // 大屏幕
+                return { size: 100, gap: 10 }; // 大屏幕
             }
         };
         
-        const { size } = getTileSize();
-        const gap = 10; // 统一使用10px间距，与CSS保持一致
+        const { size, gap } = getTileConfig();
         
         for (let i = 0; i < 4; i++) {
             for (let j = 0; j < 4; j++) {

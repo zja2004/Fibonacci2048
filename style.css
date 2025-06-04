@@ -308,6 +308,14 @@ h1 {
         justify-content: center;
     }
     
+    .grid-container {
+        gap: 8px;
+    }
+    
+    .grid-row {
+        gap: 8px;
+    }
+    
     .grid-cell {
         width: 70px;
         height: 70px;
@@ -352,6 +360,14 @@ h1 {
     
     h1 {
         font-size: 1.8em;
+    }
+    
+    .grid-container {
+        gap: 6px;
+    }
+    
+    .grid-row {
+        gap: 6px;
     }
     
     .grid-cell {
