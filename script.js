@@ -9,6 +9,9 @@ class FibonacciGame {
         // 斐波那契数列
         this.fibonacci = [1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181, 6765];
         
+        // 初始化皮肤
+        this.initTheme();
+        
         this.initGrid();
         this.bindEvents();
         this.updateDisplay();
@@ -42,6 +45,7 @@ class FibonacciGame {
         // 按钮事件
         document.getElementById('restart-btn').addEventListener('click', () => this.restart());
         document.getElementById('try-again-btn').addEventListener('click', () => this.restart());
+        document.getElementById('theme-btn').addEventListener('click', () => this.toggleTheme());
     }
     
     setupTouchEvents() {
@@ -562,6 +566,36 @@ class FibonacciGame {
         this.addRandomTile();
         this.updateTiles();
         this.updateDisplay();
+    }
+    
+    // 初始化皮肤
+    initTheme() {
+        const savedTheme = localStorage.getItem('fibonacci-2048-theme') || 'original';
+        this.currentTheme = savedTheme;
+        this.applyTheme(savedTheme);
+    }
+    
+    // 切换皮肤
+    toggleTheme() {
+        const newTheme = this.currentTheme === 'original' ? 'candy' : 'original';
+        this.currentTheme = newTheme;
+        this.applyTheme(newTheme);
+        localStorage.setItem('fibonacci-2048-theme', newTheme);
+    }
+    
+    // 应用皮肤
+    applyTheme(theme) {
+        const body = document.body;
+        const themeBtn = document.getElementById('theme-btn');
+        const themeText = themeBtn.querySelector('.theme-text');
+        
+        if (theme === 'candy') {
+            body.classList.add('candy-theme');
+            themeText.textContent = '原始';
+        } else {
+            body.classList.remove('candy-theme');
+            themeText.textContent = '糖果色';
+        }
     }
 }
 

@@ -35,11 +35,46 @@ header {
     margin-bottom: 20px;
 }
 
+.header-left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+}
+
 h1 {
     color: #776e65;
     font-size: 2.5em;
     font-weight: bold;
     margin: 0;
+}
+
+.theme-switcher {
+    display: flex;
+    align-items: center;
+}
+
+.theme-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #8f7a66;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 6px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.theme-btn:hover {
+    background: #9f8b77;
+    transform: translateY(-2px);
+}
+
+.theme-icon {
+    font-size: 16px;
 }
 
 .score-container {
@@ -461,4 +496,150 @@ h1 {
     .tile-4181 {
         font-size: 0.8em;
     }
+}
+
+/* 糖果色梦幻皮肤 */
+body.candy-theme {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+body.candy-theme .container {
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 15px 35px rgba(102, 126, 234, 0.3);
+}
+
+body.candy-theme h1 {
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: rainbow 3s ease-in-out infinite;
+}
+
+@keyframes rainbow {
+    0%, 100% { filter: hue-rotate(0deg); }
+    50% { filter: hue-rotate(180deg); }
+}
+
+body.candy-theme .score-box {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+body.candy-theme .score-label {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+body.candy-theme .theme-btn {
+    background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+}
+
+body.candy-theme .theme-btn:hover {
+    background: linear-gradient(135deg, #ff5252, #26d0ce);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+}
+
+body.candy-theme .grid-cell {
+    background: #ffffff;
+}
+
+/* 糖果色方块样式 - 纯色版本 */
+body.candy-theme .tile-1 { 
+    background: #ff6b9d; 
+    color: #fff; 
+}
+body.candy-theme .tile-2 { 
+    background: #c44569; 
+    color: #fff;
+}
+body.candy-theme .tile-3 { 
+    background: #f8b500; 
+    color: #fff;
+}
+body.candy-theme .tile-5 { 
+    background: #f0932b; 
+    color: #fff;
+}
+body.candy-theme .tile-8 { 
+    background: #6c5ce7; 
+    color: #fff;
+}
+body.candy-theme .tile-13 { 
+    background: #a29bfe; 
+    color: #fff;
+}
+body.candy-theme .tile-21 { 
+    background: #fd79a8; 
+    color: #fff;
+}
+body.candy-theme .tile-34 { 
+    background: #00b894; 
+    color: #fff;
+}
+body.candy-theme .tile-55 { 
+    background: #00cec9; 
+    color: #fff;
+}
+body.candy-theme .tile-89 { 
+    background: #e17055; 
+    color: #fff;
+}
+body.candy-theme .tile-144 { 
+    background: #0984e3; 
+    color: #fff;
+}
+body.candy-theme .tile-233 { 
+    background: #74b9ff; 
+    color: #fff;
+}
+body.candy-theme .tile-377 { 
+    background: #55a3ff; 
+    color: #fff;
+}
+body.candy-theme .tile-610 { 
+    background: #00b894; 
+    color: #fff;
+}
+body.candy-theme .tile-987 { 
+    background: #fdcb6e; 
+    color: #fff;
+}
+body.candy-theme .tile-1597 { 
+    background: #e84393; 
+    color: #fff;
+}
+body.candy-theme .tile-2584 { 
+    background: #fd79a8; 
+    color: #fff;
+}
+body.candy-theme .tile-4181 { 
+    background: #6c5ce7; 
+    color: #fff;
+}
+
+body.candy-theme .game-explanation {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(240, 248, 255, 0.9));
+    border: 2px solid rgba(102, 126, 234, 0.3);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
+}
+
+body.candy-theme .game-credits {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(240, 248, 255, 0.9));
+    border-left: 4px solid #667eea;
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
+}
+
+body.candy-theme .restart-button {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+body.candy-theme .restart-button:hover {
+    background: linear-gradient(135deg, #5a67d8, #6b46c1);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
 }
