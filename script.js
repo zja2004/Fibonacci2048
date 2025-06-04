@@ -315,19 +315,20 @@ class FibonacciGame {
         const container = document.getElementById('tile-container');
         container.innerHTML = '';
         
-        // 根据屏幕宽度动态计算方块尺寸和间距
+        // 根据屏幕宽度动态计算方块尺寸
         const getTileSize = () => {
             const screenWidth = window.innerWidth;
             if (screenWidth <= 400) {
-                return { size: 60, gap: 8 }; // 小屏幕，减少间距
+                return { size: 60 }; // 小屏幕
             } else if (screenWidth <= 600) {
-                return { size: 70, gap: 9 }; // 中等屏幕，稍微减少间距
+                return { size: 70 }; // 中等屏幕
             } else {
-                return { size: 100, gap: 10 }; // 大屏幕
+                return { size: 100 }; // 大屏幕
             }
         };
         
-        const { size, gap } = getTileSize();
+        const { size } = getTileSize();
+        const gap = 10; // 统一使用10px间距，与CSS保持一致
         
         for (let i = 0; i < 4; i++) {
             for (let j = 0; j < 4; j++) {
@@ -335,8 +336,7 @@ class FibonacciGame {
                     const tile = document.createElement('div');
                     tile.className = `tile tile-${this.grid[i][j]} tile-new`;
                     tile.textContent = this.grid[i][j];
-                    // 在grid布局中，位置 = (索引 * (方块尺寸 + 间距))
-                    // 因为grid-gap已经处理了间距，我们只需要计算每个格子的起始位置
+                    // 精确计算位置：每个位置 = 索引 * (方块尺寸 + 间距)
                     tile.style.left = `${j * (size + gap)}px`;
                     tile.style.top = `${i * (size + gap)}px`;
                     container.appendChild(tile);
