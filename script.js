@@ -315,16 +315,21 @@ class FibonacciGame {
         const container = document.getElementById('tile-container');
         container.innerHTML = '';
         
-        // 根据屏幕尺寸和方向动态计算方块尺寸和间距
+        // 根据屏幕尺寸、方向和缩放比例动态计算方块尺寸和间距
         const getTileConfig = () => {
-            const screenWidth = window.innerWidth;
+            // 获取设备像素比和缩放因子
+            const devicePixelRatio = window.devicePixelRatio || 1;
+            const zoomLevel = Math.round((window.outerWidth / window.innerWidth) * 100) / 100;
+            
+            // 使用实际的物理屏幕宽度（考虑缩放）
+            const actualScreenWidth = window.innerWidth * zoomLevel;
             const screenHeight = window.innerHeight;
-            const isPortrait = screenHeight > screenWidth;
+            const isPortrait = screenHeight > window.innerWidth;
             
             // 在竖屏模式下，使用更小的尺寸
-            if (screenWidth <= 400 || (isPortrait && screenWidth <= 500)) {
+            if (actualScreenWidth <= 400 || (isPortrait && actualScreenWidth <= 500)) {
                 return { size: 60, gap: 6 }; // 小屏幕或竖屏
-            } else if (screenWidth <= 600 || (isPortrait && screenWidth <= 700)) {
+            } else if (actualScreenWidth <= 600 || (isPortrait && actualScreenWidth <= 700)) {
                 return { size: 70, gap: 8 }; // 中等屏幕
             } else {
                 return { size: 100, gap: 10 }; // 大屏幕
