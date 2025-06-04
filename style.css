@@ -308,12 +308,14 @@ h1 {
         justify-content: center;
     }
     
-    .grid-cell, .tile {
+    .grid-cell {
         width: 70px;
         height: 70px;
     }
     
     .tile {
+        width: 70px;
+        height: 70px;
         font-size: 1.4em;
         line-height: 70px;
     }
@@ -352,12 +354,14 @@ h1 {
         font-size: 1.8em;
     }
     
-    .grid-cell, .tile {
+    .grid-cell {
         width: 60px;
         height: 60px;
     }
     
     .tile {
+        width: 60px;
+        height: 60px;
         font-size: 1.2em;
         line-height: 60px;
     }

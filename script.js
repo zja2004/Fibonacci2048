@@ -34,6 +34,11 @@ class FibonacciGame {
         // 触摸事件
         this.setupTouchEvents();
         
+        // 窗口大小变化事件
+        window.addEventListener('resize', () => {
+            this.updateTiles();
+        });
+        
         // 按钮事件
         document.getElementById('restart-btn').addEventListener('click', () => this.restart());
         document.getElementById('try-again-btn').addEventListener('click', () => this.restart());
@@ -310,14 +315,29 @@ class FibonacciGame {
         const container = document.getElementById('tile-container');
         container.innerHTML = '';
         
+        // 根据屏幕宽度动态计算方块间距
+        const getTileSize = () => {
+            const screenWidth = window.innerWidth;
+            if (screenWidth <= 400) {
+                return { size: 60, gap: 10 }; // 小屏幕
+            } else if (screenWidth <= 600) {
+                return { size: 70, gap: 10 }; // 中等屏幕
+            } else {
+                return { size: 100, gap: 10 }; // 大屏幕
+            }
+        };
+        
+        const { size, gap } = getTileSize();
+        const spacing = size + gap;
+        
         for (let i = 0; i < 4; i++) {
             for (let j = 0; j < 4; j++) {
                 if (this.grid[i][j] !== 0) {
                     const tile = document.createElement('div');
                     tile.className = `tile tile-${this.grid[i][j]} tile-new`;
                     tile.textContent = this.grid[i][j];
-                    tile.style.left = `${j * 110}px`;
-                    tile.style.top = `${i * 110}px`;
+                    tile.style.left = `${j * spacing}px`;
+                    tile.style.top = `${i * spacing}px`;
                     container.appendChild(tile);
                 }
             }
