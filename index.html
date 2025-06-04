@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>斐波那契2048</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>斐波那契2048</h1>
+            <div class="score-container">
+                <div class="score-box">
+                    <div class="score-label">分数</div>
+                    <div class="score" id="score">0</div>
+                </div>
+                <div class="score-box">
+                    <div class="score-label">最高分</div>
+                    <div class="score" id="best-score">0</div>
+                </div>
+            </div>
+        </header>
+        
+        <div class="game-intro">
+            <p>使用方向键移动方块。相邻的斐波那契数字会合并成下一个数字！</p>
+            <p>1 + 1 = 2, 1 + 2 = 3, 2 + 3 = 5, 3 + 5 = 8...</p>
+        </div>
+        
+        <div class="game-container">
+            <div class="grid-container">
+                <div class="grid-row">
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                </div>
+                <div class="grid-row">
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                </div>
+                <div class="grid-row">
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                </div>
+                <div class="grid-row">
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                    <div class="grid-cell"></div>
+                </div>
+            </div>
+            
+            <div class="tile-container" id="tile-container">
+                <!-- 动态生成的方块将在这里 -->
+            </div>
+        </div>
+        
+        <div class="game-controls">
+            <button class="restart-button" id="restart-btn">重新开始</button>
+        </div>
+        
+        <div class="game-explanation">
+            <h3>游戏规则：</h3>
+            <ul>
+                <li>使用方向键（↑↓←→）移动方块</li>
+                <li>相邻的斐波那契数字可以合并</li>
+                <li>合并规则：1+1=2, 1+2=3, 2+3=5, 3+5=8, 5+8=13...</li>
+                <li>目标是创造出更大的斐波那契数字</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="game-message" id="game-message">
+        <div class="message-content">
+            <h2 id="message-title"></h2>
+            <p id="message-text"></p>
+            <button class="try-again-button" id="try-again-btn">再试一次</button>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
